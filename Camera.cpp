@@ -4,32 +4,22 @@
 
 #include <GL/glu.h>
 #include "Camera.h"
-
-void Camera::setPosition(double x, double y, double z) {
-    eyeX = x;
-    eyeY = y;
-    eyeZ = z;
-}
-
-void Camera::setCenter(double x, double y, double z) {
-    centerX = x;
-    centerY = y;
-    centerZ = z;
-}
-
-void Camera::setUp(double x, double y, double z) {
-    upX = x;
-    upY = y;
-    upZ = z;
-}
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 void Camera::look() {
-    gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-4000, 4000, -3000, 3000, 10000, -10000);
+    glMultMatrixf(glm::value_ptr(view));
+    glMatrixMode(GL_MODELVIEW);
 }
 
 void Camera::godsEye() {
-    upY = 1;
-    eyeY = -500;
-    eyeZ = 1000;
-    centerX = centerY = centerZ = upX = upZ = eyeX = 0;
+    this->view = glm::lookAt(
+            glm::vec3(0.0f, -500.0f, 1000.0f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(0.0f, 1.0f, 0.0f)
+    );
 }

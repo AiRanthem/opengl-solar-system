@@ -5,28 +5,20 @@
 #ifndef OPENGL_SOLAR_SYSTEM_CAMERA_H
 #define OPENGL_SOLAR_SYSTEM_CAMERA_H
 
-struct Anchor {
-    double x, y, z;
-};
+#include "glm/glm.hpp"
 
 class Camera {
 private:
-    double eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ;
+    glm::vec3 cameraPos = glm::vec3(0.0f, -500.0f, 1000.0f);
+    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+    glm::mat4 view = glm::mat4();
 public:
-    // 移动相机坐标
-    void setPosition(double x, double y, double z);
-
-    // 控制视线方向
-    void setCenter(double x, double y, double z);
-
-    // 控制头顶
-    void setUp(double x, double y, double z);
-
     void look();
-
     void godsEye();
-
-    Camera() { godsEye(); }
 };
 
 

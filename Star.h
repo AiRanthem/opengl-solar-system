@@ -40,8 +40,6 @@ public:
 
     void draw();
 
-    void setTexture(GLuint tex);
-
     void addChild(Star* child);
 
     ~Star()

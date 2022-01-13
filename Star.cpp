@@ -25,7 +25,7 @@ void Star::draw() {
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, this->texture);
 
-    gluSphere(e_tex, this->radius, 15.0f, 15.0f);
+    gluSphere(e_tex, this->radius, 36.0f, 36.0f);
     glPopAttrib();
     gluQuadricTexture(e_tex, GLU_FALSE);
 
@@ -38,10 +38,6 @@ void Star::draw() {
         this->rAxis -= 360;
     }
     glPopMatrix();
-}
-
-void Star::setTexture(GLuint tex) {
-    this->texture = tex;
 }
 
 void Star::material() const {
