@@ -25,7 +25,7 @@ private:
     float width, height;
     GLfloat yaw{}, pitch{};
 
-    bool earthView = true;
+    bool earthView = false;
     Star *earthAnchor = nullptr;
 
     glm::mat4 view();
@@ -42,6 +42,8 @@ public:
     void onTimeFunc();
 
     void godsEye();
+
+    void humanEye();
 
     void startMoving(Direction direction);
 
@@ -62,6 +64,8 @@ public:
     void init() const;
 
     void info() const;
+
+    void switchView();
 };
 
 

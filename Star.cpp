@@ -19,8 +19,8 @@ void Star::draw() {
     }
     material();
 
-    glRotatef(57, 1.0f, 0.0f, 0.0f);
-    glRotatef(this->rAxis, 0.0f, 0.0f, 1.0f);
+    glRotatef(23, 1.0f, 0.0f, 0.0f);
+    glRotatef(this->rAxis, 0.0f, 1.0f, 0.0f);
 
     gluQuadricTexture(e_tex, GLU_TRUE);
     glPushAttrib(GL_ENABLE_BIT | GL_TEXTURE_BIT);

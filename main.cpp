@@ -3,7 +3,6 @@
 #include "TextureManager.h"
 #include "Camera.h"
 #include <GL/glut.h>
-#include <iostream>
 
 GLUquadricObj *e_tex = gluNewQuadric();
 TextureManager textureManager = TextureManager();
@@ -37,15 +36,15 @@ void init() {
     glEnable(GL_DEPTH_TEST);    //开启深度测试
     glDepthFunc(GL_LESS);    //如果输入的深度值小于参考值，则通过
     // texture
-    textureManager.addTexture("/home/airan/workspace/opengl-solar-system/assets/sun.jpg");
-    textureManager.addTexture("/home/airan/workspace/opengl-solar-system/assets/earth.jpg");
-    textureManager.addTexture("/home/airan/workspace/opengl-solar-system/assets/moon.jpg");
+    textureManager.addTexture("assets/sun.jpg");
+    textureManager.addTexture("assets/earth.jpg");
+    textureManager.addTexture("assets/moon.jpg");
     textureManager.init();
     // stars
-    Star *sun = new Star(0.5, 0, 500, textureManager.getTexture(0), 0, e_tex, true);
-    Star *earth = new Star(3, 0.5, 300, textureManager.getTexture(1), 2500, e_tex);
-    Star *earthAnchor = new Star(0, 3, 100, textureManager.getTexture(0), 400, e_tex);
-    Star *moon = new Star(4, 4, 100, textureManager.getTexture(2), 1000, e_tex);
+    Star *sun = new Star(0.5, 0, 800, textureManager.getTexture(0), 0, e_tex, true);
+    Star *earth = new Star(3, 0.15, 300, textureManager.getTexture(1), 5000, e_tex);
+    Star *earthAnchor = new Star(0, 3, 0, 0, 400, e_tex);
+    Star *moon = new Star(1, 1, 150, textureManager.getTexture(2), 1500, e_tex);
     earth->addChild(moon);
     earth->addChild(earthAnchor);
     sun->addChild(earth);
@@ -89,24 +88,23 @@ void onKeyDown(unsigned char key, int x, int y) {
             break;
         case 'a':
         case 'A':
-            camera.startMoving(LEFT);
+            camera.startMoving(RIGHT);
             break;
         case 'd':
         case 'D':
-            camera.startMoving(RIGHT);
+            camera.startMoving(LEFT);
             break;
         case 'q':
         case 'Q':
-            camera.startZoom(true);
+            camera.startMoving(UP);
             break;
         case 'e':
         case 'E':
-            camera.startZoom(false);
+            camera.startMoving(DOWN);
             break;
         default:
             break;
     }
-    camera.info();
 }
 
 void onKeyUp(unsigned char key, int x, int y) {
@@ -121,17 +119,23 @@ void onKeyUp(unsigned char key, int x, int y) {
             break;
         case 'a':
         case 'A':
-            camera.stopMoving(LEFT);
+            camera.stopMoving(RIGHT);
             break;
         case 'd':
         case 'D':
-            camera.stopMoving(RIGHT);
+            camera.stopMoving(LEFT);
             break;
         case 'q':
         case 'Q':
+            camera.stopMoving(UP);
+            break;
         case 'e':
         case 'E':
-            camera.stopZoom();
+            camera.stopMoving(DOWN);
+            break;
+        case 'x':
+        case 'X':
+            camera.switchView();
             break;
         default:
             break;

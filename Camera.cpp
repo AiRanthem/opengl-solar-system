@@ -8,24 +8,18 @@
 #include "Camera.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
 
 void Camera::displayFunc() {
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-//    float w = width * cameraZoom, h = height * cameraZoom;
-//    glOrtho(-w, w, -h, h, 10000, -10000);
     glm::vec3 target = cameraPos + cameraFront;
-    glLoadIdentity();
     gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z,
               target.x, target.y, target.z,
               cameraUp.x, cameraUp.y, cameraUp.z);
-//    glMatrixMode(GL_MODELVIEW);
 }
 
 void Camera::godsEye() {
+    earthView = false;
     cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    goTo(glm::vec3(0.0f, -500.0f, 1000.0f));
+    goTo(glm::vec3(-7000, 480.0f, 200.0f));
     lookAt(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
@@ -126,22 +120,19 @@ void Camera::onTimeFunc() {
     front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     front.y = sin(glm::radians(pitch));
     front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = glm::normalize(front);
     if (earthView) {
         Star *ea = getEarthAnchor();
         Star *earth = ea->getFather();
         glm::vec3 eap = ea->getPosition();
         glm::vec3 ep = earth->getPosition();
-//        cameraUp = eap - ep;
-        cameraPos = eap;
+        goTo(eap);
+        cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+        lookAt(eap + eap - ep);
     } else {
         cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+        cameraFront = glm::normalize(front);
+        lookAt(cameraPos + cameraFront);
     }
-    Star *ea = getEarthAnchor();
-    Star *earth = ea->getFather();
-    glm::vec3 eap = ea->getPosition();
-    glm::vec3 ep = earth->getPosition();
-    lookAt(cameraPos + cameraFront);
 }
 
 void Camera::stopZoom() {
@@ -191,8 +182,18 @@ void Camera::info() const {
 void Camera::init() const {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-width, width, -height, height, 10000, -10000);
-    gluLookAt(0, 500, -1000, 0, 0, 0, 0, 1, 0);
+    gluPerspective(45, float(width) / float(height), 1, 50000);
     glMatrixMode(GL_MODELVIEW);
 }
 
+void Camera::humanEye() {
+    earthView = true;
+}
+
+void Camera::switchView() {
+    if (earthView) {
+        godsEye();
+    } else {
+        humanEye();
+    }
+}

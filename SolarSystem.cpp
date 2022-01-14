@@ -19,4 +19,3 @@ void SolarSystem::onTimeFunc() {
         star->move();
     }
 }
-
