@@ -12,9 +12,11 @@
 class SolarSystem {
 private:
     std::vector<Star*> stars;
+    Star* earthAnchor;
 public:
     void addStar(Star* star);
-    void draw();
+    void displayFunc();
+    void onTimeFunc();
     ~SolarSystem() {
         for (const auto &star: stars) {
             delete star;

@@ -8,10 +8,11 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "glm/glm.hpp"
 #include "vector"
 
 class Star {
-private:
+public:
     float angularVelocityAxis; // 自转角速度
     float angularVelocitySun; // 公转角速度
     float radius; // 球体半径
@@ -23,6 +24,7 @@ private:
     float rSun = 0.0f; // 公转累计角度
     float rAxis = 0.0f; // 自转累计角度
     std::vector<Star *> children; // 子星
+    Star *father = nullptr; // 母星
 
     void material() const;
 
@@ -40,7 +42,15 @@ public:
 
     void draw();
 
-    void addChild(Star* child);
+    void addChild(Star *child);
+
+    void setFather(Star *f);
+
+    Star* getFather();
+
+    glm::vec3 getPosition();
+
+    void move();
 
     ~Star()
     = default;

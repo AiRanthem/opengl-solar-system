@@ -3,6 +3,8 @@
 //
 
 #include <GL/glew.h>
+
+#include <cmath>
 #include "Star.h"
 
 void Star::draw() {
@@ -29,14 +31,6 @@ void Star::draw() {
     glPopAttrib();
     gluQuadricTexture(e_tex, GLU_FALSE);
 
-    this->rSun += this->angularVelocitySun;
-    this->rAxis += this->angularVelocityAxis;
-    while (this->rSun >= 360.0f) {
-        this->rSun -= 360;
-    }
-    while (this->rAxis >= 360.0f) {
-        this->rAxis -= 360;
-    }
     glPopMatrix();
 }
 
@@ -68,4 +62,36 @@ void Star::material() const {
 
 void Star::addChild(Star *child) {
     children.push_back(child);
+    child->setFather(this);
+}
+
+void Star::move() {
+    for (const auto &child: children) {
+        child->move();
+    }
+    this->rSun += this->angularVelocitySun;
+    this->rAxis += this->angularVelocityAxis;
+    while (this->rSun >= 360.0f) {
+        this->rSun -= 360;
+    }
+    while (this->rAxis >= 360.0f) {
+        this->rAxis -= 360;
+    }
+}
+
+void Star::setFather(Star *f) {
+    this->father = f;
+}
+
+glm::vec3 Star::getPosition() {
+    float radian = glm::radians(rSun);
+    glm::vec3 position = glm::vec3(cos(radian) * distance, 0, -sin(radian) * distance);
+    if (father != nullptr) {
+        position += father->getPosition();
+    }
+    return position;
+}
+
+Star *Star::getFather() {
+    return father;
 }
