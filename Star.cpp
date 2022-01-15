@@ -2,8 +2,6 @@
 // Created by AiRanthem on 2022/1/13.
 //
 
-#include <GL/glew.h>
-
 #include <cmath>
 #include "Star.h"
 

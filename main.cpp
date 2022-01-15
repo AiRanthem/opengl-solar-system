@@ -19,7 +19,7 @@ void init() {
     // light
     GLfloat environment_ambient[] = {0.0, 0.0, 0.0, 0.0};
     glLightfv(GL_LIGHT0, GL_AMBIENT, environment_ambient);
-    GLfloat global_light_position[] = {1.0f, 0.0f, 0.0f, 1.0f};    // 光源位置
+    GLfloat global_light_position[] = {0, -480, -200.0f, 1.0f};    // 光源位置
     GLfloat global_light_ambient[] = {0.0f, 0.0, 0.0, 0.0f};    // 环境强度
     GLfloat global_light_diffuse[] = {0.5f, 0.5f, 0.5f, 0.1f};    // 散射强度
     GLfloat global_light_specular[] = {0.9f, 0.9f, 0.9f, 0.9f};    // 镜面强度
@@ -29,7 +29,6 @@ void init() {
     glLightfv(GL_LIGHT1, GL_SPECULAR, global_light_specular);
     glEnable(GL_COLOR_MATERIAL);    // 使用颜色材质
     glEnable(GL_LIGHTING);     // 使用灯光
-    glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
     glEnable(GL_AUTO_NORMAL);    //图形能把光反射到各个方向
     glEnable(GL_NORMALIZE);    //根据函数glNormal的设置条件，启用法向量
@@ -41,18 +40,23 @@ void init() {
     textureManager.addTexture("assets/moon.jpg");
     textureManager.init();
     // stars
-    Star *sun = new Star(0.5, 0, 800, textureManager.getTexture(0), 0, e_tex, true);
-    Star *earth = new Star(3, 0.15, 300, textureManager.getTexture(1), 5000, e_tex);
-    Star *earthAnchor = new Star(0, 3, 0, 0, 400, e_tex);
-    Star *moon = new Star(1, 1, 150, textureManager.getTexture(2), 1500, e_tex);
+    Star *sun = new Star(0.5, 0, 800,
+                         textureManager.getTexture(0), 0, e_tex, true);
+    Star *earth = new Star(3, 0.15, 300,
+                           textureManager.getTexture(1), 5000, e_tex);
+    Star *earthAnchor = new Star(0, 3, 0,
+                                 0, 400, e_tex);
+    Star *moon = new Star(1, 1, 150,
+                          textureManager.getTexture(2), 1500, e_tex);
     earth->addChild(moon);
     earth->addChild(earthAnchor);
     sun->addChild(earth);
     solarSystem.addStar(sun);
-    //others
+    //camera
     camera.init();
     camera.godsEye();
     camera.setEarthAnchor(earthAnchor);
+    // others
     glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
     glClearColor(0, 0, 0, 0);
     glClearDepth(1.0f);

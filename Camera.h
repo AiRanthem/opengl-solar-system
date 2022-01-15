@@ -20,15 +20,12 @@ private:
     glm::vec3 cameraRight = glm::vec3(1.0f, 0.0f, 0.0f);
     glm::vec3 speed{};
     glm::vec2 mouseAnchor{}, mouseMotion{};
-    int zoomStatus = 0;
-    float velocity = 10.0, cameraZoom = 1.0;
+    float velocity = 10.0;
     float width, height;
     GLfloat yaw{}, pitch{};
 
     bool earthView = false;
     Star *earthAnchor = nullptr;
-
-    glm::mat4 view();
 
 public:
     Camera(float w, float h) : width(w), height(h) {};
@@ -49,10 +46,6 @@ public:
 
     void stopMoving(Direction direction);
 
-    void startZoom(bool in);
-
-    void stopZoom();
-
     void lookAt(glm::vec3 target);
 
     void goTo(glm::vec3 target);
@@ -62,8 +55,6 @@ public:
     void setMotion(glm::vec2 motion);
 
     void init() const;
-
-    void info() const;
 
     void switchView();
 };

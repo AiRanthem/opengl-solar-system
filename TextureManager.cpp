@@ -18,13 +18,11 @@ void TextureManager::init() {
     for (const auto &file: files) {
         textureImages.push_back(loadTexture(file));
     }
-//    textureImages[0] = loadTexture("/home/airan/workspace/opengl-solar-system/assets/sun.jpg");
-//    textureImages[1] = loadTexture("/home/airan/workspace/opengl-solar-system/assets/earth.jpg");
-//    textureImages[2] = loadTexture("/home/airan/workspace/opengl-solar-system/assets/moon.jpg");
     glGenTextures(size(), &allTextures[0]);
     for (int i = 0; i < size(); i++) {
         glBindTexture(GL_TEXTURE_2D, allTextures[i]);
-        glTexImage2D(GL_TEXTURE_2D, 0, 3, textureImages[i].width, textureImages[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+        glTexImage2D(GL_TEXTURE_2D, 0, 3, textureImages[i].width,
+                     textureImages[i].height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                      textureImages[i].data);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // 线形滤波
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // 线形滤波

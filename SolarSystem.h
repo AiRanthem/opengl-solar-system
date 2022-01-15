@@ -12,7 +12,6 @@
 class SolarSystem {
 private:
     std::vector<Star*> stars;
-    Star* earthAnchor;
 public:
     void addStar(Star* star);
     void displayFunc();

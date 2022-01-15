@@ -12,7 +12,7 @@
 #include "vector"
 
 class Star {
-public:
+private:
     float angularVelocityAxis; // 自转角速度
     float angularVelocitySun; // 公转角速度
     float radius; // 球体半径
